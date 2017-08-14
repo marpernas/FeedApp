@@ -30,6 +30,9 @@ export class FeedPage {
     time_coment: "11h ago"
   }
 
+  public lista_filmes = new Array<any>();
+
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -37,11 +40,15 @@ export class FeedPage {
   ) {
   }
 
-  ionViewDidLoad() {
-    this.MovieProvider.getLastMovies().subscribe(
+   ionViewDidLoad() {
+    this.MovieProvider.getLatesMovies().subscribe(
       data=>{
-        console.log(data);
-      }, error =>{
+        const response = (data as any);
+        const objeto_retorno = JSON.parse(response._body);
+        this.lista_filmes = objeto_retorno.results;
+        
+        console.log(objeto_retorno);
+      }, error => {
         console.log(error);
       }
     )
